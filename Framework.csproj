@@ -32,13 +32,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JetBrains.Annotations, Version=9.1.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\SerialCOM\NuGet.packages\JetBrains.Annotations.9.1.1\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <HintPath>packages\JetBrains.Annotations.9.1.1\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,13 +53,16 @@
     <Compile Include="Applications\Dispatcher.cs" />
     <Compile Include="Applications\IModuleController.cs" />
     <Compile Include="Applications\IView.cs" />
-    <Compile Include="Presentation\SmartConverterBase.cs" />
+    <Compile Include="Presentation\MenuItem.cs" />
+    <Compile Include="Presentation\MenuItemsCollection.cs" />
+    <Compile Include="Presentation\Converters\SmartConverterBase.cs" />
     <Compile Include="Applications\ViewHelper.cs" />
     <Compile Include="Foundation\Disposable.cs" />
     <Compile Include="Foundation\ExpressionExtension.cs" />
     <Compile Include="Foundation\Finalizable.cs" />
     <Compile Include="Foundation\Model.cs" />
     <Compile Include="Applications\ViewModel.cs" />
+    <Compile Include="Presentation\Converters\VisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
