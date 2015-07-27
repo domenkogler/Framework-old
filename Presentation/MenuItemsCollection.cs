@@ -18,5 +18,10 @@ namespace Kogler.Framework
             item.Parent = this.Parent;
             base.InsertItem(index, item);
         }
+
+        public void AddToHierarchy(params MenuItem[] items)
+        {
+            
+        }
     }
 }

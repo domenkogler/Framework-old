@@ -26,7 +26,9 @@ namespace Kogler.Framework
         {
             get { return groupName; }
             set { Set(ref groupName, value); }
-        } 
+        }
+
+        public const string GroupNameSeparator = "||";
 
         private bool isSeparator;
         public bool IsSeparator

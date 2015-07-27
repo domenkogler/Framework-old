@@ -38,6 +38,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Applications\ApplicationInfo.cs" />
     <Compile Include="Applications\Dispatcher.cs" />
+    <Compile Include="Applications\IMessageService.cs" />
     <Compile Include="Applications\IModuleController.cs" />
     <Compile Include="Applications\IView.cs" />
     <Compile Include="Presentation\MenuItem.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Foundation\Model.cs" />
     <Compile Include="Applications\ViewModel.cs" />
     <Compile Include="Presentation\Converters\VisibilityConverter.cs" />
+    <Compile Include="Presentation\MessageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
