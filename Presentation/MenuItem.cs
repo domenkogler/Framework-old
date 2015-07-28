@@ -93,6 +93,20 @@ namespace Kogler.Framework
             set { Set(ref parent, value); }
         }
 
+        private ICommand command;
+        public ICommand Command
+        {
+            get { return command; }
+            set { Set(ref command, value); }
+        }
+
+        private object commandParameter;
+        public object CommandParameter
+        {
+            get { return commandParameter; }
+            set { Set(ref commandParameter, value); }
+        }
+
         public MenuItemsCollection Items { get; }
     }
 }

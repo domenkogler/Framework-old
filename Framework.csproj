@@ -54,10 +54,12 @@
     <Compile Include="Applications\Dispatcher.cs" />
     <Compile Include="Applications\IMessageService.cs" />
     <Compile Include="Applications\IModuleController.cs" />
+    <Compile Include="Presentation\Command.cs" />
+    <Compile Include="Presentation\IPresentationService.cs" />
     <Compile Include="Applications\IView.cs" />
+    <Compile Include="Presentation\Converters\SmartConverterBase.cs" />
     <Compile Include="Presentation\MenuItem.cs" />
     <Compile Include="Presentation\MenuItemsCollection.cs" />
-    <Compile Include="Presentation\Converters\SmartConverterBase.cs" />
     <Compile Include="Applications\ViewHelper.cs" />
     <Compile Include="Foundation\Disposable.cs" />
     <Compile Include="Foundation\ExpressionExtension.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="Applications\ViewModel.cs" />
     <Compile Include="Presentation\Converters\VisibilityConverter.cs" />
     <Compile Include="Presentation\MessageService.cs" />
+    <Compile Include="Presentation\ResourceHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

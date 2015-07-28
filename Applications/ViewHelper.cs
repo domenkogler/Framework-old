@@ -17,10 +17,10 @@ namespace Kogler.Framework
         {
             if (view == null)
             {
-                throw new ArgumentNullException("view");
+                throw new ArgumentNullException(nameof(view));
             }
 
-            object dataContext = view.DataContext;
+            var dataContext = view.DataContext;
             // When the DataContext is null then it might be that the ViewModel hasn't set it yet.
             // Enforce it by executing the event queue of the Dispatcher.
             if (dataContext == null && Dispatcher.IsDispatcherSynchronizationContext)
