@@ -27,6 +27,14 @@ namespace Kogler.Framework
             return null;
         }
 
+        public static bool RunInUI(Action action)
+        {
+            var isInContext = IsDispatcherSynchronizationContext;
+            if (isInContext) action();
+            else BeginInvoke(action);
+            return isInContext;
+        }
+
         public static void BeginInvoke(Action action)
         {
             Current.BeginInvoke(action);
