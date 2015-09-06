@@ -1,13 +1,9 @@
-using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+using Caliburn.Micro;
 
 namespace Kogler.Framework
 {
-    /// <summary>
-    /// Defines the base class for a model.
-    /// </summary>
-    [Serializable]
-    public abstract class Model : PropertyChangedBase
+    public class Screen : Caliburn.Micro.Screen
     {
         /// <summary>
         /// Set the property with the specified value. PropertyChanged event is raised and it returns true if the value changes.
@@ -25,7 +21,7 @@ namespace Kogler.Framework
                 if (Equals(field, value)) return false;
             }
             field = value;
-            RaisePropertyChanged(propertyNames);
+            propertyNames.Apply(NotifyOfPropertyChange);
             return true;
         }
 

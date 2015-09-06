@@ -8,7 +8,7 @@ namespace Kogler.Framework
     /// This is the default implementation of the <see cref="IMessageService"/> interface. It shows messages via the MessageBox 
     /// to the user.
     /// </summary>
-    [Export(typeof(IMessageService))]
+    [Export(typeof(IMessageService)), Export()]
     public class MessageService : IMessageService
     {
         private static MessageBoxResult MessageBoxResult => MessageBoxResult.None;

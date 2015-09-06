@@ -31,8 +31,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="JetBrains.Annotations, Version=9.1.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>packages\JetBrains.Annotations.9.1.1\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Framework.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Framework.Configuration.1.0.0-beta7\lib\net45\Microsoft.Framework.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Framework.Configuration.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Framework.Configuration.Abstractions.1.0.0-beta7\lib\net45\Microsoft.Framework.Configuration.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Framework.Configuration.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Framework.Configuration.Json.1.0.0-beta7\lib\net45\Microsoft.Framework.Configuration.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -40,6 +64,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,10 +76,35 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\App.cs" />
     <Compile Include="Applications\ApplicationInfo.cs" />
+    <Compile Include="Applications\Mef.cs" />
     <Compile Include="Applications\Dispatcher.cs" />
+    <Compile Include="Applications\ConfigurationService.cs" />
     <Compile Include="Applications\IMessageService.cs" />
     <Compile Include="Applications\IModuleController.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Applications\MefExportFactory.cs" />
+    <Compile Include="Collections\AlphanumComparator.cs" />
+    <None Include="Collections\BulkObservableCollection.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Collections\DateDifference.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Collections\LimitedQueue.cs" />
+    <Compile Include="Collections\ObservableDictionary.cs" />
+    <Compile Include="Collections\RecursiveCollection.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\ModelExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Entity\EntityInterfaces.cs" />
+    <Compile Include="Entity\IntegrationInterfaces.cs" />
+    <Compile Include="Entity\RecursiveInterfaces.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Foundation\PropertyChangedBase.cs" />
+    <Compile Include="Foundation\Screen.cs" />
+    <Compile Include="Foundation\ViewAware.cs" />
     <Compile Include="Presentation\Command.cs" />
     <Compile Include="Presentation\IPresentationService.cs" />
     <Compile Include="Applications\IView.cs" />
@@ -62,7 +113,7 @@
     <Compile Include="Presentation\MenuItemsCollection.cs" />
     <Compile Include="Applications\ViewHelper.cs" />
     <Compile Include="Foundation\Disposable.cs" />
-    <Compile Include="Foundation\ExpressionExtension.cs" />
+    <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Foundation\Finalizable.cs" />
     <Compile Include="Foundation\Model.cs" />
     <Compile Include="Applications\ViewModel.cs" />
@@ -72,6 +123,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

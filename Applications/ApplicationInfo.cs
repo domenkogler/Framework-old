@@ -6,93 +6,27 @@ namespace Kogler.Framework
 {
     public static class ApplicationInfo
     {
-        private static readonly Lazy<string> productName = new Lazy<string>(GetProductName);
-        private static readonly Lazy<string> version = new Lazy<string>(GetVersion);
-        private static readonly Lazy<string> company = new Lazy<string>(GetCompany);
-        private static readonly Lazy<string> copyright = new Lazy<string>(GetCopyright);
-        private static readonly Lazy<string> applicationPath = new Lazy<string>(GetApplicationPath);
+        private static readonly Lazy<Assembly> EntryAssembly = new Lazy<Assembly>(Assembly.GetEntryAssembly);
 
-
-        /// <summary>
-        /// Gets the product name of the application.
-        /// </summary>
-        public static string ProductName { get { return productName.Value; } }
-
-        /// <summary>
-        /// Gets the version number of the application.
-        /// </summary>
-        public static string Version { get { return version.Value; } }
-
-        /// <summary>
-        /// Gets the company of the application.
-        /// </summary>
-        public static string Company { get { return company.Value; } }
-
-        /// <summary>
-        /// Gets the copyright information of the application.
-        /// </summary>
-        public static string Copyright { get { return copyright.Value; } }
-
-        /// <summary>
-        /// Gets the path for the executable file that started the application, not including the executable name.
-        /// </summary>
-        public static string ApplicationPath { get { return applicationPath.Value; } }
-
-
-        private static string GetProductName()
+        private static TAttribute GetAttribute<TAttribute>() where TAttribute : Attribute
         {
-            Assembly entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly != null)
-            {
-                AssemblyProductAttribute attribute = ((AssemblyProductAttribute)Attribute.GetCustomAttribute(
-                    entryAssembly, typeof(AssemblyProductAttribute)));
-                return (attribute != null) ? attribute.Product : "";
-            }
-            return "";
+            var ea = EntryAssembly.Value;
+            if (ea == null) return null;
+            return ((TAttribute) Attribute.GetCustomAttribute(ea, typeof (TAttribute)));
         }
 
-        private static string GetVersion()
-        {
-            Assembly entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly != null)
-            {
-                return entryAssembly.GetName().Version.ToString();
-            }
-            return "";
-        }
-
-        private static string GetCompany()
-        {
-            Assembly entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly != null)
-            {
-                AssemblyCompanyAttribute attribute = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(
-                    entryAssembly, typeof(AssemblyCompanyAttribute)));
-                return (attribute != null) ? attribute.Company : "";
-            }
-            return "";
-        }
-
-        private static string GetCopyright()
-        {
-            Assembly entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly != null)
-            {
-                AssemblyCopyrightAttribute attribute = (AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(
-                    entryAssembly, typeof(AssemblyCopyrightAttribute));
-                return attribute != null ? attribute.Copyright : "";
-            }
-            return "";
-        }
-
-        private static string GetApplicationPath()
-        {
-            Assembly entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly != null)
-            {
-                return Path.GetDirectoryName(entryAssembly.Location);
-            }
-            return "";
-        }
+        private static readonly Lazy<string> productName = new Lazy<string>(() => GetAttribute<AssemblyProductAttribute>()?.Product);
+        private static readonly Lazy<string> description = new Lazy<string>(() => GetAttribute<AssemblyDescriptionAttribute>()?.Description);
+        private static readonly Lazy<string> version = new Lazy<string>(() => EntryAssembly.Value?.GetName().Version.ToString());
+        private static readonly Lazy<string> company = new Lazy<string>(() => GetAttribute<AssemblyCompanyAttribute>()?.Company);
+        private static readonly Lazy<string> copyright = new Lazy<string>(() => GetAttribute<AssemblyCopyrightAttribute>()?.Copyright);
+        private static readonly Lazy<string> applicationPath = new Lazy<string>(() => Path.GetDirectoryName(EntryAssembly.Value?.Location ?? ""));
+        
+        public static string ProductName => productName.Value;
+        public static string Description => description.Value;
+        public static string Version => version.Value;
+        public static string Company => company.Value;
+        public static string Copyright => copyright.Value;
+        public static string ApplicationPath => applicationPath.Value;
     }
 }
