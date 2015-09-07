@@ -102,6 +102,9 @@
     <Compile Include="Entity\IntegrationInterfaces.cs" />
     <Compile Include="Entity\RecursiveInterfaces.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Foundation\ExportWithViewAttribute.cs" />
+    <Compile Include="Foundation\IShell.cs" />
+    <Compile Include="Foundation\MefBootstrapper.cs" />
     <Compile Include="Foundation\PropertyChangedBase.cs" />
     <Compile Include="Foundation\Screen.cs" />
     <Compile Include="Foundation\ViewAware.cs" />

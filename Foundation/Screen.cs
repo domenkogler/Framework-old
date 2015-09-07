@@ -3,6 +3,10 @@ using Caliburn.Micro;
 
 namespace Kogler.Framework
 {
+    public class Screen<TView> : Screen
+    {
+    }
+
     public class Screen : Caliburn.Micro.Screen
     {
         /// <summary>
