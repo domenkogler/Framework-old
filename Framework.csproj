@@ -39,6 +39,14 @@
       <HintPath>packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="JetBrains.Annotations, Version=9.1.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>packages\JetBrains.Annotations.9.1.1\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
@@ -102,6 +110,8 @@
     <Compile Include="Entity\IntegrationInterfaces.cs" />
     <Compile Include="Entity\RecursiveInterfaces.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Foundation\Bootstrapper.cs" />
+    <Compile Include="Foundation\WindsorBootstrapper.cs" />
     <Compile Include="Foundation\ExportWithViewAttribute.cs" />
     <Compile Include="Foundation\IShell.cs" />
     <Compile Include="Foundation\MefBootstrapper.cs" />

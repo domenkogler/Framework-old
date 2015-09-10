@@ -33,8 +33,7 @@ namespace Kogler.Framework
 
         public static void Add(Assembly assembly)
         {
-            Add(new AssemblyCatalog(assembly));  
-            AssemblySource.Instance.Add(assembly);  
+            Add(new AssemblyCatalog(assembly));
         }
 
         public static void Add(ComposablePartCatalog catalog)
