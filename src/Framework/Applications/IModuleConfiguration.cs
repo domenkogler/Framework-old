@@ -1,9 +1,9 @@
 namespace Kogler.Framework
 {
     /// <summary>
-    /// Interface for a module controller which is responsible for the module lifecycle.
+    /// Interface for the module lifecycle.
     /// </summary>
-    public interface IModuleController
+    public interface IModuleConfiguration
     {
         /// <summary>
         /// Initializes the module controller.

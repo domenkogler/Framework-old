@@ -2,22 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Reflection;
 using Caliburn.Micro;
 
 namespace Kogler.Framework
 {
     public class MefBootstrapper : Bootstrapper
     {
+        public MefBootstrapper(bool useApplication) : base(useApplication) { }
+
         protected override void Configure()
         {
-            Mef.Add(typeof(App));
-            Mef.Add(GetType());
-            LoadAssemblies();
+            base.Configure();
             LoadedAssemblies.Values.Apply(Mef.Add);
 
-            Mef.Batch.AddExportedValue<IWindowManager>(new WindowManager());
-            Mef.Batch.AddExportedValue<IEventAggregator>(new EventAggregator());
+            //Mef.Batch.AddExportedValue<IWindowManager>(new WindowManager());
+            //Mef.Batch.AddExportedValue<IEventAggregator>(new EventAggregator());
 
             Mef.Compose();
         }

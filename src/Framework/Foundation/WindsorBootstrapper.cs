@@ -24,6 +24,8 @@ namespace Kogler.Framework
 
     public class WindsorBootstrapper : Bootstrapper
     {
+        public WindsorBootstrapper(bool useApplication) : base(useApplication) { }
+
         protected WindsorContainer Container{ get; } = new WindsorContainer();
 
         protected override void Configure()
@@ -32,7 +34,7 @@ namespace Kogler.Framework
             Container.AddFacility<TypedFactoryFacility>();
             Container.Register(Component.For<IWindsorContainer>().Instance(Container).LifestyleSingleton());
             Container.Register(Component.For<ILazyComponentLoader>().ImplementedBy<LazyOfTComponentLoader>());
-            LoadAssemblies();
+            base.Configure();
         }
 
         protected override object GetInstance(Type service, string key)

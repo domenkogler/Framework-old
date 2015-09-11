@@ -13,13 +13,13 @@ namespace Kogler.Framework
 {
     public abstract class Bootstrapper : BootstrapperBase
     {
-        protected Bootstrapper()
+        protected Bootstrapper(bool useApplication) : base(useApplication)
         {
             Initialize();
         }
 
-        protected IEnumerable<IModuleController> ModuleControllers => IoC.GetAllInstances(typeof(IModuleController)).OfType<IModuleController>();
-        protected IEnumerable<IPresentationService> PresentationServices => IoC.GetAllInstances(typeof(IPresentationService)).OfType<IPresentationService>();
+        protected IEnumerable<IModuleConfiguration> ModuleConfigurations => GetAllInstances(typeof(IModuleConfiguration)).OfType<IModuleConfiguration>();
+        protected IEnumerable<IPresentationConfiguration> PresentationConfigurations => GetAllInstances(typeof(IPresentationConfiguration)).OfType<IPresentationConfiguration>();
         protected List<string> AssemblyDirectories { get; } = new List<string>(new[] { "" });
         protected List<string> Modules { get; } = new List<string>();
         protected Dictionary<string, Assembly> LoadedAssemblies { get; } = new Dictionary<string, Assembly>();
@@ -38,13 +38,35 @@ namespace Kogler.Framework
             AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += AssemblyResolve;
         }
 
+        protected override void Configure()
+        {
+            LoadAssemblies();
+            ConfigureModules();
+            InitModules();
+            ConfigureLocators();
+        }
+        
         protected virtual void LoadAssemblies()
         {
             Modules.Select(a => new KeyValuePair<string, Assembly>(a, Assembly.Load(a))).Apply(kvp =>
             {
-                AssemblySource.Instance.Add(kvp.Value);
+                var asi = AssemblySource.Instance;
+                // check needed for xUnit tests
+                if (!asi.Contains(kvp.Value)) asi.Add(kvp.Value);
                 LoadedAssemblies.Add(kvp);
             });
+        }
+
+        protected virtual void ConfigureModules() { }
+
+        protected virtual void InitModules()
+        {
+            // Initialize all modules
+            foreach (var module in ModuleConfigurations) { module.Initialize(); }
+            // Initialize all presentation services
+            foreach (var presentation in PresentationConfigurations) { presentation.Initialize(); }
+            // Run all modules
+            foreach (var module in ModuleConfigurations) { module.Run(); }
         }
 
         protected virtual void ConfigureLocators()
@@ -81,21 +103,9 @@ namespace Kogler.Framework
                 return baseLocate(modelType, displayLocation, context);
             };
         }
-
-        protected virtual void InitModules()
-        {
-            // Initialize all presentation services
-            foreach (var presentationService in PresentationServices) { presentationService.Initialize(); }
-
-            // Initialize and run all module controllers
-            foreach (var moduleController in ModuleControllers) { moduleController.Initialize(); }
-            foreach (var moduleController in ModuleControllers) { moduleController.Run(); }
-        }
-
+        
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            ConfigureLocators();
-            InitModules();
             DisplayRootView();
         }
 
@@ -106,7 +116,7 @@ namespace Kogler.Framework
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            foreach (var moduleController in ModuleControllers.Reverse()) { moduleController.Shutdown(); }
+            foreach (var module in ModuleConfigurations.Reverse()) { module.Shutdown(); }
             DestroyContainer();
             base.OnExit(sender, e);
         }
