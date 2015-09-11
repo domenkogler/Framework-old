@@ -82,17 +82,20 @@ namespace Kogler.Framework
             };
         }
 
-        protected override void OnStartup(object sender, StartupEventArgs e)
+        protected virtual void InitModules()
         {
-            ConfigureLocators();
-
             // Initialize all presentation services
             foreach (var presentationService in PresentationServices) { presentationService.Initialize(); }
 
             // Initialize and run all module controllers
             foreach (var moduleController in ModuleControllers) { moduleController.Initialize(); }
             foreach (var moduleController in ModuleControllers) { moduleController.Run(); }
+        }
 
+        protected override void OnStartup(object sender, StartupEventArgs e)
+        {
+            ConfigureLocators();
+            InitModules();
             DisplayRootView();
         }
 

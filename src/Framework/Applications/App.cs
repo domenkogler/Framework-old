@@ -51,7 +51,6 @@ namespace Kogler.Framework
             foreach (var moduleController in ModuleControllers) { moduleController.Run(); }
         }
         
-        
         private Assembly AssemblyResolve(object sender, ResolveEventArgs args)
         {
             var name = args.Name.LeftOf(",").LeftOf(".dll");

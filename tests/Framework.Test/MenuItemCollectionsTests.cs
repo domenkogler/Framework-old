@@ -1,13 +1,11 @@
-﻿using System;
-using Kogler.Framework;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Kogler.Framework;
+using Xunit;
 
-namespace Test
+namespace Framework.Test
 {
-    [TestClass]
-    public class UnitTest1
+    public class MenuItemCollectionsTests
     {
-        [TestMethod]
+        [Fact]
         public void MenuItemsCollection()
         {
             var collection = new MenuItemsCollection();
@@ -24,8 +22,11 @@ namespace Test
             };
 
             collection.AddToHierarchy(items);
-            Assert.AreEqual(collection.Count, 2);
-            Assert.AreEqual(collection[0].Items.Count, 2);
+            Assert.Equal(collection.Count, 2);
+            Assert.Equal(collection[0].Text, "Group1");
+            Assert.Equal(collection[0].Items[1].Text, "Item6");
+            Assert.Equal(collection[0].Items[0].Items[2].Text, "Item7");
+            Assert.Equal(collection[1].Items[0].Items[1].Items[0].Text, "Item5");
         }
     }
 }
