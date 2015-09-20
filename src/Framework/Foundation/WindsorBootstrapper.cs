@@ -22,6 +22,13 @@ namespace Kogler.Framework
         }
     }
 
+    public class AutofacBootstrapper : Bootstrapper
+    {
+        public AutofacBootstrapper(bool useApplication) : base(useApplication) { }
+
+
+    }
+
     public class WindsorBootstrapper : Bootstrapper
     {
         public WindsorBootstrapper(bool useApplication) : base(useApplication) { }

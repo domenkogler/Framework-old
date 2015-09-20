@@ -1,4 +1,5 @@
 ﻿using Kogler.Framework;
+using Shouldly;
 using Xunit;
 
 namespace Framework.Test
@@ -22,11 +23,11 @@ namespace Framework.Test
             };
 
             collection.AddToHierarchy(items);
-            Assert.Equal(collection.Count, 2);
-            Assert.Equal(collection[0].Text, "Group1");
-            Assert.Equal(collection[0].Items[1].Text, "Item6");
-            Assert.Equal(collection[0].Items[0].Items[2].Text, "Item7");
-            Assert.Equal(collection[1].Items[0].Items[1].Items[0].Text, "Item5");
+            collection.Count.ShouldBe(2);
+            collection[0].Text.ShouldBe("Group1");
+            collection[0].Items[1].Text.ShouldBe("Item6");
+            collection[0].Items[0].Items[2].Text.ShouldBe("Item7");
+            collection[1].Items[0].Items[1].Items[0].Text.ShouldBe("Item5");
         }
     }
 }
