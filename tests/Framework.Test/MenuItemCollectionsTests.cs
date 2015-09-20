@@ -1,8 +1,7 @@
-﻿using Kogler.Framework;
-using Shouldly;
+﻿using Shouldly;
 using Xunit;
 
-namespace Framework.Test
+namespace Kogler.Framework.Test
 {
     public class MenuItemCollectionsTests
     {

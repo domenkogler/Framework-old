@@ -22,26 +22,32 @@ namespace Kogler.Framework
         }
     }
 
-    public class AutofacBootstrapper : Bootstrapper
-    {
-        public AutofacBootstrapper(bool useApplication) : base(useApplication) { }
-
-
-    }
-
     public class WindsorBootstrapper : Bootstrapper
     {
-        public WindsorBootstrapper(bool useApplication) : base(useApplication) { }
+        public WindsorBootstrapper(bool useApplication) : base(useApplication)
+        {
+            Initialize();
+        }
 
-        protected WindsorContainer Container{ get; } = new WindsorContainer();
-
-        protected override void Configure()
+        protected WindsorContainer Container { get; } = new WindsorContainer();
+        
+        protected override void InitContainer()
         {
             Container.Kernel.Resolver.AddSubResolver(new CollectionResolver(Container.Kernel, true));
             Container.AddFacility<TypedFactoryFacility>();
             Container.Register(Component.For<IWindsorContainer>().Instance(Container).LifestyleSingleton());
             Container.Register(Component.For<ILazyComponentLoader>().ImplementedBy<LazyOfTComponentLoader>());
-            base.Configure();
+            ConfigureContainer();
+        }
+
+        protected virtual void ConfigureContainer() { }
+
+        protected override void RegisterModules()
+        {
+            Container.Register(AssemblySource.Instance,
+                ass => Classes.FromAssembly(ass).BasedOn<IModuleConfiguration>().WithServiceAllInterfaces().LifestyleSingleton(),
+                ass => Classes.FromAssembly(ass).BasedOn<IPresentationConfiguration>().WithServiceAllInterfaces().LifestyleSingleton());
+            ConfigureContainer();
         }
 
         protected override object GetInstance(Type service, string key)

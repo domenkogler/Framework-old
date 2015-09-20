@@ -8,36 +8,40 @@ using Caliburn.Micro;
 
 namespace Kogler.Framework
 {
-    public static class Mef
+    public class Mef
     {
-        static Mef()
+        public Mef()
         {
             Catalog = new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)));
             Container = new CompositionContainer(Catalog, CompositionOptions.DisableSilentRejection);
         }
 
-        public static AggregateCatalog Catalog { get; }
-        public static CompositionContainer Container { get; }
-        public static CompositionBatch Batch { get; } = new CompositionBatch();
+        public static Mef Instance { get; } = new Mef();
 
-        internal static void Compose()
+        public AggregateCatalog Catalog { get; }
+        public CompositionContainer Container { get; }
+        public CompositionBatch Batch { get; } = new CompositionBatch();
+
+        internal void Compose()
         {
             Batch.AddExportedValue(Container);
             Container.Compose(Batch);
         }
 
-        public static void Add(Type type)
+        public void Add(Type type)
         {
             Add(type.Assembly);
         }
 
-        public static void Add(Assembly assembly)
+        public void Add(Assembly assembly)
         {
             Add(new AssemblyCatalog(assembly));
         }
 
-        public static void Add(ComposablePartCatalog catalog)
+        public void Add(ComposablePartCatalog catalog)
         {
+            var ac = catalog as AssemblyCatalog;
+            if (ac != null && Catalog.Catalogs.ContainsFullName(ac)) return;
             Catalog.Catalogs.Add(catalog);
         }
     }

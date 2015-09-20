@@ -8,12 +8,23 @@ namespace Kogler.Framework
 {
     public class MefBootstrapper : Bootstrapper
     {
-        public MefBootstrapper(bool useApplication) : base(useApplication) { }
+        public MefBootstrapper(bool useApplication) : base(useApplication)
+        {
+            Mef = Mef.Instance;
+            Initialize();
+        }
+
+        internal MefBootstrapper(bool useApplication, Mef mef) : base(useApplication)
+        {
+            Mef = mef;
+            Initialize();
+        }
+        internal Mef Mef { get; }
 
         protected override void Configure()
         {
             base.Configure();
-            LoadedAssemblies.Values.Apply(Mef.Add);
+            AssemblySource.Instance.Apply(Mef.Add);
 
             //Mef.Batch.AddExportedValue<IWindowManager>(new WindowManager());
             //Mef.Batch.AddExportedValue<IEventAggregator>(new EventAggregator());

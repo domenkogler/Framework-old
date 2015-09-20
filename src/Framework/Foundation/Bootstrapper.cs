@@ -13,16 +13,13 @@ namespace Kogler.Framework
 {
     public abstract class Bootstrapper : BootstrapperBase
     {
-        protected Bootstrapper(bool useApplication) : base(useApplication)
-        {
-            Initialize();
-        }
+        protected Bootstrapper(bool useApplication) : base(useApplication) { }
 
         protected IEnumerable<IModuleConfiguration> ModuleConfigurations => GetAllInstances(typeof(IModuleConfiguration)).OfType<IModuleConfiguration>();
         protected IEnumerable<IPresentationConfiguration> PresentationConfigurations => GetAllInstances(typeof(IPresentationConfiguration)).OfType<IPresentationConfiguration>();
         protected List<string> AssemblyDirectories { get; } = new List<string>(new[] { "" });
         protected List<string> Modules { get; } = new List<string>();
-        protected Dictionary<string, Assembly> LoadedAssemblies { get; } = new Dictionary<string, Assembly>();
+        private Dictionary<string, Assembly> LoadedAssemblies { get; } = new Dictionary<string, Assembly>();
         
         protected override void PrepareApplication()
         {
@@ -41,9 +38,11 @@ namespace Kogler.Framework
         protected override void Configure()
         {
             LoadAssemblies();
-            ConfigureModules();
-            InitModules();
+            InitContainer();
+            RegisterModules();
+            FinishContainer();
             ConfigureLocators();
+            InitModules();
         }
         
         protected virtual void LoadAssemblies()
@@ -57,7 +56,11 @@ namespace Kogler.Framework
             });
         }
 
-        protected virtual void ConfigureModules() { }
+        protected virtual void InitContainer() { }
+        
+        protected virtual void RegisterModules() { }
+
+        protected virtual void FinishContainer() { }
 
         protected virtual void InitModules()
         {
