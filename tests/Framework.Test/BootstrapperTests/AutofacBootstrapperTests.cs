@@ -22,11 +22,6 @@ namespace Kogler.Framework.Test
                     .AsImplementedInterfaces()
                     .InstancePerLifetimeScope();
             }
-
-            public ILifetimeScope GetLifetimeScope()
-            {
-                return Container.BeginLifetimeScope();
-            }
         }
 
         public class AutofacBootstrapperTest

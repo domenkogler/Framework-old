@@ -11,7 +11,7 @@ namespace Kogler.Framework.Test
 {
     public partial class BootstrapperTests
     {
-        private class WindsorTestBootstrapper : WindsorBootstrapper
+        public class WindsorTestBootstrapper : WindsorBootstrapper
         {
             public WindsorTestBootstrapper() : base(false) { }
 

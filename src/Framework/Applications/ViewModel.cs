@@ -1,5 +1,5 @@
 using System;
-using Caliburn.Micro;
+using System.Windows;
 
 namespace Kogler.Framework
 {
@@ -42,21 +42,22 @@ namespace Kogler.Framework
 
         protected void Activate(IView view)
         {
-            // Check if the code is running within the WPF application model
-            if (Dispatcher.IsDispatcherSynchronizationContext)
-            {
-                // Set DataContext of the view has to be delayed so that the ViewModel can initialize the internal data (e.g. Commands)
-                // before the view starts with DataBinding.
-                Dispatcher.BeginInvoke(() => 
-                {
-                    view.DataContext = this;
-                });
-            }
-            else
-            {
-                // When the code runs outside of the WPF application model then we set the DataContext immediately.
-                view.DataContext = this;
-            }
+            //// Check if the code is running within the WPF application model
+            //if (Dispatcher.IsDispatcherSynchronizationContext)
+            //{
+            //    // Set DataContext of the view has to be delayed so that the ViewModel can initialize the internal data (e.g. Commands)
+            //    // before the view starts with DataBinding.
+            //    Dispatcher.BeginOnUIThread(() => 
+            //    {
+            //        view.DataContext = this;
+            //    });
+            //}
+            //else
+            //{
+            //    // When the code runs outside of the WPF application model then we set the DataContext immediately.
+            //    view.DataContext = this;
+            //}
+            Dispatcher.OnFrameworkElementLoad(view as FrameworkElement, (s, a) => view.DataContext = this);
         }
     }
 
@@ -74,11 +75,10 @@ namespace Kogler.Framework
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewModel&lt;TView&gt;"/> class and attaches itself as <c>DataContext</c> to the view.
         /// </summary>
-        /// <param name="exportFactory">The view.</param>
-        protected ViewModel(MefExportFactory<TView> exportFactory) : base(exportFactory.Instance)
+        /// <param name="view">The view.</param>
+        protected ViewModel(TView view) : base(view)
         {
-            TypeView = exportFactory.Instance;
-            ExportFactory = exportFactory;
+            TypeView = view;
         }
 
         /// <summary>
@@ -89,11 +89,14 @@ namespace Kogler.Framework
         /// </remarks>
         protected TView TypeView { get; }
 
-        protected MefExportFactory<TView> ExportFactory { get; }
-
-        public void ActivateInWindow(string state = null)
+        public virtual void ActivateInWindow(string state = null)
         {
-            Activate(ExportFactory.Create());
+            ActivateInWindow(View, state);
+        }
+
+        public virtual void ActivateInWindow(IView view, string state = null)
+        {
+            Activate(view);
             SetState(state);
         }
     }

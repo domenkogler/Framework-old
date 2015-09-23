@@ -9,7 +9,7 @@ namespace Kogler.Framework.Test
 {
     public partial class BootstrapperTests
     {
-        private class MefTestBootstrapper : MefBootstrapper
+        public class MefTestBootstrapper : MefBootstrapper
         {
             public MefTestBootstrapper() : base(false, new Mef()) { }
         }

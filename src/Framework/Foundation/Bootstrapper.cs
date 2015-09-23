@@ -35,8 +35,9 @@ namespace Kogler.Framework
             AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += AssemblyResolve;
         }
 
-        protected override void Configure()
+        protected sealed override void Configure()
         {
+            ConfigureLogger();
             LoadAssemblies();
             InitContainer();
             RegisterModules();
@@ -44,6 +45,8 @@ namespace Kogler.Framework
             ConfigureLocators();
             InitModules();
         }
+
+        protected virtual void ConfigureLogger() { }
         
         protected virtual void LoadAssemblies()
         {

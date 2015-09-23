@@ -75,6 +75,10 @@
       <HintPath>..\..\NuGet.packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\NuGet.packages\NLog.4.1.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -93,11 +97,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Applications\ApplicationInfo.cs" />
+    <Compile Include="Applications\AutofacViewModel.cs" />
     <Compile Include="Applications\Mef.cs" />
     <Compile Include="Applications\Dispatcher.cs" />
     <Compile Include="Applications\ConfigurationService.cs" />
     <Compile Include="Applications\IMessageService.cs" />
     <Compile Include="Applications\IModuleConfiguration.cs" />
+    <Compile Include="Applications\MefViewModel.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Applications\MefExportFactory.cs" />
@@ -119,6 +125,7 @@
     <Compile Include="Entity\RecursiveInterfaces.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Foundation\AutofacBootstrapper.cs" />
+    <Compile Include="Foundation\AutofacModule.cs" />
     <Compile Include="Foundation\Bootstrapper.cs" />
     <Compile Include="Foundation\WindsorBootstrapper.cs" />
     <Compile Include="Foundation\ExportWithViewAttribute.cs" />
@@ -128,7 +135,7 @@
     <Compile Include="Foundation\Screen.cs" />
     <Compile Include="Foundation\ViewAware.cs" />
     <Compile Include="Presentation\Command.cs" />
-    <Compile Include="Presentation\IPresentationConfiguration.cs" />
+    <Compile Include="Presentation\PresentationConfiguration.cs" />
     <Compile Include="Applications\IView.cs" />
     <Compile Include="Presentation\Converters\SmartConverterBase.cs" />
     <Compile Include="Presentation\MenuItem.cs" />
@@ -145,7 +152,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

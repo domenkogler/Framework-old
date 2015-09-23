@@ -16,6 +16,11 @@ namespace Kogler.Framework
         protected IContainer Container { get; private set; }
         protected ContainerBuilder Builder { get; private set; }
 
+        public ILifetimeScope GetLifetimeScope()
+        {
+            return Container.BeginLifetimeScope();
+        }
+
         protected override void InitContainer()
         {
             Builder = new ContainerBuilder();
@@ -43,7 +48,7 @@ namespace Kogler.Framework
         {
             Container = Builder.Build();
         }
-        
+
         protected override object GetInstance(Type service, string key)
         {
             object instance;

@@ -21,14 +21,15 @@ namespace Kogler.Framework
         }
         internal Mef Mef { get; }
 
-        protected override void Configure()
+        protected override void InitContainer()
         {
-            base.Configure();
             AssemblySource.Instance.Apply(Mef.Add);
-
             //Mef.Batch.AddExportedValue<IWindowManager>(new WindowManager());
             //Mef.Batch.AddExportedValue<IEventAggregator>(new EventAggregator());
-
+        }
+        
+        protected override void FinishContainer()
+        {
             Mef.Compose();
         }
 
