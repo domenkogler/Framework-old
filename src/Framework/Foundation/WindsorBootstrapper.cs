@@ -45,8 +45,7 @@ namespace Kogler.Framework
         protected override void RegisterModules()
         {
             Container.Register(AssemblySource.Instance,
-                ass => Classes.FromAssembly(ass).BasedOn<IModuleConfiguration>().WithServiceAllInterfaces().LifestyleSingleton(),
-                ass => Classes.FromAssembly(ass).BasedOn<IPresentationConfiguration>().WithServiceAllInterfaces().LifestyleSingleton());
+                ass => Classes.FromAssembly(ass).BasedOn<IModule>().WithServiceAllInterfaces().LifestyleSingleton());
             ConfigureContainer();
         }
 

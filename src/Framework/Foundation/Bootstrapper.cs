@@ -15,10 +15,9 @@ namespace Kogler.Framework
     {
         protected Bootstrapper(bool useApplication) : base(useApplication) { }
 
-        protected IEnumerable<IModuleConfiguration> ModuleConfigurations => GetAllInstances(typeof(IModuleConfiguration)).OfType<IModuleConfiguration>();
-        protected IEnumerable<IPresentationConfiguration> PresentationConfigurations => GetAllInstances(typeof(IPresentationConfiguration)).OfType<IPresentationConfiguration>();
+        protected IEnumerable<IModule> Modules => GetAllInstances(typeof(IModule)).OfType<IModule>();
         protected List<string> AssemblyDirectories { get; } = new List<string>(new[] { "" });
-        protected List<string> Modules { get; } = new List<string>();
+        protected List<string> ModuleNames { get; } = new List<string>();
         private Dictionary<string, Assembly> LoadedAssemblies { get; } = new Dictionary<string, Assembly>();
         
         protected override void PrepareApplication()
@@ -50,7 +49,7 @@ namespace Kogler.Framework
         
         protected virtual void LoadAssemblies()
         {
-            Modules.Select(a => new KeyValuePair<string, Assembly>(a, Assembly.Load(a))).Apply(kvp =>
+            ModuleNames.Select(a => new KeyValuePair<string, Assembly>(a, Assembly.Load(a))).Apply(kvp =>
             {
                 var asi = AssemblySource.Instance;
                 // check needed for xUnit tests
@@ -67,12 +66,9 @@ namespace Kogler.Framework
 
         protected virtual void InitModules()
         {
-            // Initialize all modules
-            foreach (var module in ModuleConfigurations) { module.Initialize(); }
-            // Initialize all presentation services
-            foreach (var presentation in PresentationConfigurations) { presentation.Initialize(); }
-            // Run all modules
-            foreach (var module in ModuleConfigurations) { module.Run(); }
+            foreach (var module in Modules) { module.Load(); }
+            foreach (var module in Modules) { module.InitUI(); }
+            foreach (var module in Modules) { module.Run(); }
         }
 
         protected virtual void ConfigureLocators()
@@ -122,7 +118,7 @@ namespace Kogler.Framework
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            foreach (var module in ModuleConfigurations.Reverse()) { module.Shutdown(); }
+            foreach (var module in Modules.Reverse()) { module.Shutdown(); }
             DestroyContainer();
             base.OnExit(sender, e);
         }

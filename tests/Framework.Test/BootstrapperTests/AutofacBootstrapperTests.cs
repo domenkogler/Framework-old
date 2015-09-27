@@ -50,14 +50,10 @@ namespace Kogler.Framework.Test
             {
                 using (var scope = bootstrapper.GetLifetimeScope())
                 {
-                    var modules = scope.Resolve<IEnumerable<Lazy<IModuleConfiguration>>>().ToArray();
-                    var presentations = scope.Resolve<IEnumerable<Lazy<IPresentationConfiguration>>>().ToArray();
+                    var modules = scope.Resolve<IEnumerable<Lazy<IModule>>>().ToArray();
 
                     modules.ShouldNotBeNull();
                     modules.ShouldNotBeEmpty();
-
-                    presentations.ShouldNotBeNull();
-                    presentations.ShouldNotBeEmpty();
                 }
             }
         }

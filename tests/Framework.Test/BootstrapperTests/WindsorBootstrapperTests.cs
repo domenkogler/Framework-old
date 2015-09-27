@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using Caliburn.Micro;
 using Castle.MicroKernel.Registration;
 using Shouldly;
@@ -81,13 +80,9 @@ namespace Kogler.Framework.Test
             [Fact(Skip = "Windsor cannot resolve many Lazy<>")]
             public void ResolveAllLazy()
             {
-                var modules = bootstrapper.GetAll<Lazy<IModuleConfiguration>>().ToArray();
-                var presentations = bootstrapper.GetAll<Lazy<IPresentationConfiguration>>().ToArray();
+                var modules = bootstrapper.GetAll<Lazy<IModule>>().ToArray();
                 modules.ShouldNotBeNull();
                 modules.ShouldNotBeEmpty();
-
-                presentations.ShouldNotBeNull();
-                presentations.ShouldNotBeEmpty();
             }
         }
     }

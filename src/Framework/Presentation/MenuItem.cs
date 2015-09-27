@@ -72,7 +72,7 @@ namespace Kogler.Framework
             set { Set(ref imageUri, value, nameof(ImageUri), nameof(Image)); }
         }
 
-        private Image image;
+        //private Image image;
         public Image Image
         {
             get

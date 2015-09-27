@@ -24,8 +24,8 @@ namespace Kogler.Framework.Test
             public IDependency1 Dependency1 { get; }
         }
 
-        [Export(typeof(IModuleConfiguration))]
-        public class Module1 : IModuleConfiguration
+        [Export(typeof(IModule))]
+        public class Module1 : Module
         {
             [ImportingConstructor]
             public Module1(IDependency2 dependency2)
@@ -33,21 +33,10 @@ namespace Kogler.Framework.Test
                 Dependency2 = dependency2;
             }
             private IDependency2 Dependency2 {get;}
-            public void Initialize() { }
-
-            public void Run() { }
-
-            public void Shutdown() { }
         }
 
-        [Export(typeof(IPresentationConfiguration))]
-        public class PresentationModule1 : IPresentationConfiguration
-        {
-            public void Initialize() { }
-        }
-
-        [Export(typeof(IModuleConfiguration))]
-        public class Module2 : IModuleConfiguration
+        [Export(typeof(IModule))]
+        public class Module2 : Module
         {
             [ImportingConstructor]
             public Module2(IDependency1 dependency1)
@@ -55,17 +44,6 @@ namespace Kogler.Framework.Test
                 Dependency1 = dependency1;
             }
             private IDependency1 Dependency1 { get; }
-            public void Initialize() { }
-
-            public void Run() { }
-
-            public void Shutdown() { }
-        }
-
-        [Export(typeof(IPresentationConfiguration))]
-        public class PresentationModule2 : IPresentationConfiguration
-        {
-            public void Initialize() { }
         }
     }
 }

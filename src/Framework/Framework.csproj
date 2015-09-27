@@ -102,7 +102,7 @@
     <Compile Include="Applications\Dispatcher.cs" />
     <Compile Include="Applications\ConfigurationService.cs" />
     <Compile Include="Applications\IMessageService.cs" />
-    <Compile Include="Applications\IModuleConfiguration.cs" />
+    <Compile Include="Applications\IModule.cs" />
     <Compile Include="Applications\MefViewModel.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -125,7 +125,6 @@
     <Compile Include="Entity\RecursiveInterfaces.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Foundation\AutofacBootstrapper.cs" />
-    <Compile Include="Foundation\AutofacModule.cs" />
     <Compile Include="Foundation\Bootstrapper.cs" />
     <Compile Include="Foundation\WindsorBootstrapper.cs" />
     <Compile Include="Foundation\ExportWithViewAttribute.cs" />
@@ -135,7 +134,6 @@
     <Compile Include="Foundation\Screen.cs" />
     <Compile Include="Foundation\ViewAware.cs" />
     <Compile Include="Presentation\Command.cs" />
-    <Compile Include="Presentation\PresentationConfiguration.cs" />
     <Compile Include="Applications\IView.cs" />
     <Compile Include="Presentation\Converters\SmartConverterBase.cs" />
     <Compile Include="Presentation\MenuItem.cs" />

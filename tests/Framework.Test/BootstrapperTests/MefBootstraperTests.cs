@@ -25,9 +25,7 @@ namespace Kogler.Framework.Test
             }
 
             [ImportMany]
-            public IEnumerable<Lazy<IModuleConfiguration>> ModuleConfigurations { get; set; }
-            [ImportMany]
-            public IEnumerable<Lazy<IPresentationConfiguration>> PresentationConfigurations { get; set; }
+            public IEnumerable<Lazy<IModule>> Modules { get; set; }
 
             [Fact]
             public void ResolvesLazy()
@@ -42,18 +40,11 @@ namespace Kogler.Framework.Test
             public void ResolveAllLazy()
             {
                 var modules = bootstrapper.Mef.Container
-                    .GetExports<IModuleConfiguration>()
-                    .ToArray();
-                var presentations = bootstrapper.Mef.Container
-                    .GetExports<IPresentationConfiguration>()
+                    .GetExports<IModule>()
                     .ToArray();
                 modules.ShouldNotBeNull();
                 modules.ShouldNotBeEmpty();
-                modules.Select(m => m.Value).ShouldBe(ModuleConfigurations.Select(m => m.Value));
-                
-                presentations.ShouldNotBeNull();
-                presentations.ShouldNotBeEmpty();
-                presentations.Select(m => m.Value).ShouldBe(PresentationConfigurations.Select(m => m.Value));
+                modules.Select(m => m.Value).ShouldBe(Modules.Select(m => m.Value));
             }
         }
     }

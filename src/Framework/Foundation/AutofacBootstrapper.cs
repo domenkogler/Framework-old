@@ -38,7 +38,7 @@ namespace Kogler.Framework
         {
             var ass = AssemblySource.Instance.ToArray();
             builder.RegisterAssemblyTypes(ass)
-                .Where(t => t.HasInterface<IModuleConfiguration>() || t.HasInterface<IPresentationConfiguration>())
+                .Where(t => t.HasInterface<IModule>())
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder.RegisterAssemblyModules(ass);
