@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -7,7 +10,7 @@ using System.Windows.Media.Imaging;
 namespace Kogler.Framework
 {
     [ContentProperty("Items")]
-    public class MenuItem : Model
+    public class MenuItem : PropertyChangedBase
     {
         public MenuItem()
         {
@@ -25,10 +28,16 @@ namespace Kogler.Framework
         public string GroupName
         {
             get { return groupName; }
-            set { Set(ref groupName, value); }
+            set
+            {
+                Set(ref groupName, value);
+                HierrarchyGroupName = value;
+            }
         }
 
         public const string GroupNameSeparator = "||";
+
+        internal string HierrarchyGroupName;
 
         private bool isSeparator;
         public bool IsSeparator
@@ -92,6 +101,8 @@ namespace Kogler.Framework
             get { return parent; }
             set { Set(ref parent, value); }
         }
+
+        internal IEnumerable<MenuItem> Deep => new[] {this}.Union(Items.SelectMany(i => i.Deep));
 
         private ICommand command;
         public ICommand Command

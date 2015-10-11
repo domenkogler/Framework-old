@@ -13,8 +13,12 @@ namespace Kogler.Framework
 {
     public abstract class Bootstrapper : BootstrapperBase
     {
-        protected Bootstrapper(bool useApplication) : base(useApplication) { }
+        protected Bootstrapper(bool useApplication) : base(useApplication)
+        {
+            UseApplication = useApplication;
+        }
 
+        protected readonly bool UseApplication;
         protected IEnumerable<IModule> Modules => GetAllInstances(typeof(IModule)).OfType<IModule>();
         protected List<string> AssemblyDirectories { get; } = new List<string>(new[] { "" });
         protected List<string> ModuleNames { get; } = new List<string>();
@@ -34,6 +38,25 @@ namespace Kogler.Framework
             AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += AssemblyResolve;
         }
 
+        protected override IEnumerable<Assembly> SelectAssemblies()
+        {
+            var baseAssemblies = new List<Assembly>(base.SelectAssemblies());
+            var thisAssembly = GetType().Assembly;
+            if (!baseAssemblies.Contains(thisAssembly))
+            {
+                baseAssemblies.Add(thisAssembly);
+            }
+            // If this library is being accessed from a Caliburn enabled app then
+            // this assembly may already be 'known' in the AssemblySource.Instance collection.
+            // We need to remove these otherwise we'll get:
+            //  "An item with the same key has already been added." (System.ArgumentException)
+            foreach (var assembly in baseAssemblies.ToList().Where(newAssembly => AssemblySource.Instance.Contains(newAssembly)))
+            {
+                baseAssemblies.Remove(assembly);
+            }
+            return baseAssemblies;
+        }
+
         protected sealed override void Configure()
         {
             ConfigureLogger();
@@ -42,7 +65,6 @@ namespace Kogler.Framework
             RegisterModules();
             FinishContainer();
             ConfigureLocators();
-            InitModules();
         }
 
         protected virtual void ConfigureLogger() { }
@@ -66,7 +88,7 @@ namespace Kogler.Framework
 
         protected virtual void InitModules()
         {
-            foreach (var module in Modules) { module.Load(); }
+            foreach (var module in Modules) { module.Init(); }
             foreach (var module in Modules) { module.InitUI(); }
             foreach (var module in Modules) { module.Run(); }
         }
@@ -75,45 +97,38 @@ namespace Kogler.Framework
         {
             var baseLocate = ViewLocator.LocateTypeForModelType;
             ViewLocator.LocateTypeForModelType = (modelType, displayLocation, context) =>
-            {
-                Type viewType;
-                if (modelType.IsSubclassOf(typeof(Screen<>)))
-                {
-                    Type screenType;
-                    do
-                    {
-                        screenType = modelType.BaseType;
-                    } while (screenType == typeof(Screen<>));
-                    viewType = screenType.GenericTypeArguments.First();
-                }
-                else
-                {
-                    var attribute =
-                        modelType.GetCustomAttributes(typeof(ViewAttribute), false)
-                            .OfType<ViewAttribute>()
-                            .FirstOrDefault(x => x.Context == context);
-                    viewType = attribute?.ViewType;
-                }
-                if (viewType != null) return viewType;
-                if (viewType != null && viewType.IsInterface)
-                {
-                    return
-                        AssemblySource.Instance
-                            .SelectMany(a => a.GetTypes())
-                            .FirstOrDefault(t => t.IsSubclassOf(viewType));
-                }
-                return baseLocate(modelType, displayLocation, context);
-            };
+            LocateTypeForModelType(modelType, displayLocation, context) ?? baseLocate(modelType, displayLocation, context);
         }
-        
+
+        public static Func<Type, DependencyObject, object, Type> LocateTypeForModelType = (modelType, displayLocation, context) =>
+        {
+            Type viewType = modelType.GetGenericSubclassOf(typeof(Screen<>))?.GenericTypeArguments.First();
+            if (viewType == null)
+            {
+                var attribute = modelType.GetCustomAttributes(typeof(ViewAttribute), false)
+                        .OfType<ViewAttribute>()
+                        .FirstOrDefault(x => x.Context == context);
+                viewType = attribute?.ViewType;
+            }
+            if (viewType != null) return viewType;
+            if (viewType != null && viewType.IsInterface)
+            {
+                return AssemblySource.Instance
+                        .SelectMany(a => a.GetTypes())
+                        .FirstOrDefault(t => t.IsSubclassOf(viewType));
+            }
+            return null;
+        };
+
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            InitModules();
             DisplayRootView();
         }
 
         protected virtual void DisplayRootView()
         {
-            DisplayRootViewFor<IShell>();
+            DisplayRootViewFor<IShellViewModel>();
         }
 
         protected override void OnExit(object sender, EventArgs e)

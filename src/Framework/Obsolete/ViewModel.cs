@@ -57,7 +57,7 @@ namespace Kogler.Framework
             //    // When the code runs outside of the WPF application model then we set the DataContext immediately.
             //    view.DataContext = this;
             //}
-            Dispatcher.OnFrameworkElementLoad(view as FrameworkElement, (s, a) => view.DataContext = this);
+            (view as FrameworkElement).OnLoad((s, a) => view.DataContext = this);
         }
     }
 

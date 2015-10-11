@@ -5,6 +5,7 @@ namespace Kogler.Framework.Test
     public partial class BootstrapperTests
     {
         public interface IDependency1 { }
+
         [Export(typeof(IDependency1)), Export]
         public class Dependency1 : IDependency1 { }
 
@@ -12,6 +13,7 @@ namespace Kogler.Framework.Test
         {
             IDependency1 Dependency1 { get; }
         }
+
         [Export(typeof(IDependency2)), Export]
         public class Dependency2 : IDependency2
         {

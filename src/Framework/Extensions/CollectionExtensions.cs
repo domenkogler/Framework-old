@@ -64,14 +64,19 @@ namespace Kogler.Framework
             return remove.Length;
         }
 
+        public static int Remove<T>(this IList<T> list, params T[] items)
+        {
+            return items.Count(list.Remove);
+        }
+
         public static int Remove(this IList list, Predicate<object> match)
         {
-            List<object> removed = list.Cast<object>().Where(item => match(item)).ToList();
-            foreach (object item in removed)
+            List<object> matched = list.Cast<object>().Where(item => match(item)).ToList();
+            foreach (object item in matched)
             {
                 list.Remove(item);
             }
-            return removed.Count;
+            return matched.Count;
         }
     }
 }

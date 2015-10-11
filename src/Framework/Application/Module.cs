@@ -9,9 +9,9 @@ namespace Kogler.Framework
     public interface IModule
     {
         /// <summary>
-        /// Initializes the module.
+        /// Init the module.
         /// </summary>
-        void Load();
+        void Init();
 
         /// <summary>
         /// Initializes the UI.
@@ -31,32 +31,32 @@ namespace Kogler.Framework
 
     public abstract class Module : IModule
     {
-        public static void AddAppDictionaries(Assembly resourceAssembly, params string[] moduleResources)
+        public static void AddToAppMergedDictionaries(Assembly resourceAssembly, params string[] paths)
         {
             var mergedDictionaries = Application.Current?.Resources.MergedDictionaries;
 
-            foreach (var resourcePath in moduleResources)
+            foreach (var resourcePath in paths)
             {
                 mergedDictionaries?.Add(new ResourceDictionary { Source = resourceAssembly.GetPackUri(resourcePath) });
             }
         }
 
-        public void AddAppDictionaries(params string[] resources)
+        public void AddToAppMergedDictionaries(params string[] paths)
         {
-            AddAppDictionaries(GetType().Assembly, resources);
+            AddToAppMergedDictionaries(GetType().Assembly, paths);
         }
+
+        public virtual void Init() { }
+
+        public virtual void InitUI() { }
 
         void IModule.InitUI()
         {
             Dispatcher.OnUIThread(InitUI);
         }
 
-        public virtual void Load() { }
-
-        public virtual void InitUI() { }
-
         public virtual void Run() { }
-
+        
         public virtual void Shutdown() { }
     }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Caliburn.Micro;
 
 namespace Kogler.Framework
 {
@@ -21,9 +23,20 @@ namespace Kogler.Framework
             base.InsertItem(index, item);
         }
 
+        public void AddToHierarchy(IEnumerable<MenuItem> items)
+        {
+            AddToHierarchy(items.ToArray());
+        }
+
         public void AddToHierarchy(params MenuItem[] items)
         {
-            var siblings = items.Where(i => string.IsNullOrEmpty(i.GroupName)).ToArray();
+            AddToHierarchyRecursive(items);
+            ResetHierrarchyGroupNames();
+        }
+
+        private void AddToHierarchyRecursive(params MenuItem[] items)
+        {
+            var siblings = items.Where(i => string.IsNullOrEmpty(i.HierrarchyGroupName)).ToArray();
             var childs = items.Where(i => !siblings.Contains(i));
             foreach (var sibling in siblings)
             {
@@ -31,16 +44,21 @@ namespace Kogler.Framework
             }
             foreach (var child in childs)
             {
-                var groups = child.GroupName.Split(new[]{ MenuItem.GroupNameSeparator}, StringSplitOptions.RemoveEmptyEntries);
-                child.GroupName = string.Join(MenuItem.GroupNameSeparator, groups.Skip(1));
+                var groups = child.HierrarchyGroupName.Split(new[] { MenuItem.GroupNameSeparator }, StringSplitOptions.RemoveEmptyEntries);
+                child.HierrarchyGroupName = string.Join(MenuItem.GroupNameSeparator, groups.Skip(1));
                 var parent = Items.FirstOrDefault(a => a.Text == groups[0]);
                 if (parent == null)
                 {
-                    parent = new MenuItem {Text = groups[0]};
+                    parent = new MenuItem { Text = groups[0] };
                     Add(parent);
                 }
-                parent.Items.AddToHierarchy(child);
+                parent.Items.AddToHierarchyRecursive(child);
             }
+        }
+
+        private void ResetHierrarchyGroupNames()
+        {
+            Items.SelectMany(i => i.Deep).Apply(m => m.HierrarchyGroupName = m.GroupName);
         }
     }
 }

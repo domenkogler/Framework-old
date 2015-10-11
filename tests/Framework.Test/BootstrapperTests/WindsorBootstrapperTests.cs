@@ -77,13 +77,13 @@ namespace Kogler.Framework.Test
                 dependency2.Value.Dependency1.ShouldNotBeNull();
             }
 
-            [Fact(Skip = "Windsor cannot resolve many Lazy<>")]
-            public void ResolveAllLazy()
-            {
-                var modules = bootstrapper.GetAll<Lazy<IModule>>().ToArray();
-                modules.ShouldNotBeNull();
-                modules.ShouldNotBeEmpty();
-            }
+            //[Fact(Skip = "Windsor cannot resolve many Lazy<>")]
+            //public void ResolveAllLazy()
+            //{
+            //    var modules = bootstrapper.GetAll<Lazy<IModule>>().ToArray();
+            //    modules.ShouldNotBeNull();
+            //    modules.ShouldNotBeEmpty();
+            //}
         }
     }
 }

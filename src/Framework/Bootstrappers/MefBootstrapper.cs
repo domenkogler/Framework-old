@@ -19,6 +19,7 @@ namespace Kogler.Framework
             Mef = mef;
             Initialize();
         }
+
         internal Mef Mef { get; }
 
         protected override void InitContainer()

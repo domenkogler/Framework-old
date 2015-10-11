@@ -90,6 +90,7 @@
     <Compile Include="AutofacTests.cs" />
     <Compile Include="BootstrapperTests\AutofacBootstrapperTests.cs" />
     <Compile Include="BootstrapperTests\BootstrapperTests.cs" />
+    <Compile Include="BootstrapperTests\ViewLocatorTest.cs" />
     <Compile Include="BootstrapperTests\MefBootstraperTests.cs" />
     <Compile Include="ThreadHelper.cs" />
     <Compile Include="MenuItemCollectionsTests.cs" />

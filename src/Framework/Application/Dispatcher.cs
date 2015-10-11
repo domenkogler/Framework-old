@@ -33,7 +33,7 @@ namespace Kogler.Framework
         /// Executes the action on the UI thread asynchronously.
         /// </summary>
         /// <param name="action">The action to execute.</param>
-        public static void BeginOnUIThread(Action action)
+        public static void BeginOnUIThread(this Action action)
         {
             Current.BeginInvoke(action);
         }
@@ -43,7 +43,7 @@ namespace Kogler.Framework
         /// </summary>
         /// <param name="action">The action to execute.</param>
         /// <returns></returns>
-        public static Task OnUIThreadAsync(Action action)
+        public static Task OnUIThreadAsync(this Action action)
         {
             var taskSource = new TaskCompletionSource<object>();
             Action method = () => {
@@ -66,7 +66,7 @@ namespace Kogler.Framework
         /// </summary>
         /// <param name="action">The action to execute.</param>
         /// <exception cref="NotImplementedException"></exception>
-        public static void OnUIThread(Action action)
+        public static void OnUIThread(this Action action)
         {
             Exception exception = null;
             Action method = () => {
@@ -75,16 +75,15 @@ namespace Kogler.Framework
             };
             Current.Invoke(method);
             if (exception != null) throw new TargetInvocationException("An error occurred while dispatching a call to the UI Thread", exception);
-
         }
-
+        
         /// <summary>
         /// Executes the handler immediately if the element is loaded, otherwise wires it to the Loaded event.
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="handler">The handler.</param>
         /// <returns>true if the handler was executed immediately; false otherwise</returns>
-        public static bool OnFrameworkElementLoad(FrameworkElement element, RoutedEventHandler handler)
+        public static bool OnLoad(this FrameworkElement element, RoutedEventHandler handler)
         {
             if (element == null) return false;
             if (element.IsLoaded)
@@ -106,7 +105,7 @@ namespace Kogler.Framework
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="handler">The handler.</param>
-        public static void OnFrameworkElementUnload(FrameworkElement element, RoutedEventHandler handler)
+        public static void OnUnload(this FrameworkElement element, RoutedEventHandler handler)
         {
             if (element == null) return;
             RoutedEventHandler unloaded = null;
@@ -123,7 +122,7 @@ namespace Kogler.Framework
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="handler">The handler.</param>
-        public static void OnFrameworkElementLayoutUpdated(FrameworkElement element, EventHandler handler)
+        public static void OnLayoutUpdated(this FrameworkElement element, EventHandler handler)
         {
             if (element == null) return;
             EventHandler onLayoutUpdate = null;
