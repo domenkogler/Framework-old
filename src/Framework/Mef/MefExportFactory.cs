@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
-namespace Kogler.Framework
+namespace Kogler.Framework.Mef
 {
     [Export]
     public class MefExportFactory<T> : IPartImportsSatisfiedNotification

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Caliburn.Micro;
 
-namespace Kogler.Framework
+namespace Kogler.Framework.Mef
 {
     public class Mef
     {

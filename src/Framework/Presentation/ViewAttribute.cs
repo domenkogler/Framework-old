@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kogler.Framework
 {
@@ -8,6 +9,12 @@ namespace Kogler.Framework
         public object Context { get; set; }
 
         public Type ViewType { get; private set; }
+
+        public ViewAttribute(IDictionary<string, object> metadata)
+        {
+            ViewType = (Type)metadata["ViewType"];
+            Context = metadata["Context"];
+        }
 
         public ViewAttribute(Type viewType)
         {

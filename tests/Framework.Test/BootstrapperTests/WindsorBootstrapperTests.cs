@@ -5,12 +5,13 @@ using Caliburn.Micro;
 using Castle.MicroKernel.Registration;
 using Shouldly;
 using Xunit;
+using Kogler.Framework.Castle;
 
 namespace Kogler.Framework.Test
 {
     public partial class BootstrapperTests
     {
-        public class WindsorTestBootstrapper : WindsorBootstrapper
+        public class WindsorTestBootstrapper : Bootstrapper
         {
             public WindsorTestBootstrapper() : base(false) { }
 

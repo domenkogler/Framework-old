@@ -4,17 +4,17 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Caliburn.Micro;
 
-namespace Kogler.Framework
+namespace Kogler.Framework.Mef
 {
-    public class MefBootstrapper : Bootstrapper
+    public class Bootstrapper : BootstrapperBase
     {
-        public MefBootstrapper(bool useApplication) : base(useApplication)
+        public Bootstrapper(bool useApplication) : base(useApplication)
         {
             Mef = Mef.Instance;
             Initialize();
         }
 
-        internal MefBootstrapper(bool useApplication, Mef mef) : base(useApplication)
+        internal Bootstrapper(bool useApplication, Mef mef) : base(useApplication)
         {
             Mef = mef;
             Initialize();

@@ -97,14 +97,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ApplicationInfo.cs" />
+    <Compile Include="Autofac\IHaveLifetimeScope.cs" />
     <Compile Include="Presentation\DesignTimeAttribute.cs" />
     <Compile Include="Services\State.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Services\NLog.cs" />
+    <Compile Include="NLog\NLogProxy.cs" />
     <Compile Include="Presentation\ViewAttribute.cs" />
     <Compile Include="Services\ShellConductor.cs" />
     <None Include="Obsolete\AutofacViewModel.cs" />
-    <Compile Include="Services\Mef.cs" />
+    <Compile Include="Mef\Mef.cs" />
     <Compile Include="Application\Dispatcher.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\IMessageService.cs" />
@@ -112,7 +113,7 @@
     <None Include="Obsolete\MefViewModel.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Services\MefExportFactory.cs" />
+    <Compile Include="Mef\MefExportFactory.cs" />
     <Compile Include="Collections\AlphanumComparator.cs" />
     <None Include="Collections\BulkObservableCollection.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
@@ -130,12 +131,12 @@
     <Compile Include="Entity\IntegrationInterfaces.cs" />
     <Compile Include="Entity\RecursiveInterfaces.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
-    <Compile Include="Bootstrappers\AutofacBootstrapper.cs" />
-    <Compile Include="Bootstrappers\Bootstrapper.cs" />
-    <Compile Include="Bootstrappers\WindsorBootstrapper.cs" />
+    <Compile Include="Autofac\Bootstrapper.cs" />
+    <Compile Include="Application\BootstrapperBase.cs" />
+    <Compile Include="CastleWindsor\Bootstrapper.cs" />
     <Compile Include="Presentation\NavigationAttribute.cs" />
     <Compile Include="Services\IShell.cs" />
-    <Compile Include="Bootstrappers\MefBootstrapper.cs" />
+    <Compile Include="Mef\Bootstrapper.cs" />
     <Compile Include="Application\PropertyChangedBase.cs" />
     <Compile Include="Application\Screen.cs" />
     <Compile Include="Application\ViewAware.cs" />

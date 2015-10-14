@@ -10,7 +10,7 @@ namespace Kogler.Framework.Test
 {
     public partial class BootstrapperTests
     {
-        private class AutofacTestBootstrapper : AutofacBootstrapper
+        private class AutofacTestBootstrapper : Autofac.Bootstrapper
         {
             public AutofacTestBootstrapper() : base(false) { }
 

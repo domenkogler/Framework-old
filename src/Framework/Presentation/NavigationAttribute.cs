@@ -1,13 +1,22 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using Caliburn.Micro;
 
 namespace Kogler.Framework
 {
+    [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     public class NavigationAttribute : ViewAttribute, IHaveDisplayName
     {
         public string DisplayName { get; set; }
         public string Path { get; private set; }
+
+        public NavigationAttribute(IDictionary<string, object> metadata) : base(metadata)
+        {
+            Path = (string)metadata["Path"];
+            DisplayName = (string)metadata["DisplayName"];
+        }
 
         public NavigationAttribute(Type viewType, string path) : base (viewType)
         {

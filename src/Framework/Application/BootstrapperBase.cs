@@ -11,9 +11,9 @@ using Caliburn.Micro;
 
 namespace Kogler.Framework
 {
-    public abstract class Bootstrapper : BootstrapperBase
+    public abstract class BootstrapperBase : Caliburn.Micro.BootstrapperBase
     {
-        protected Bootstrapper(bool useApplication) : base(useApplication)
+        protected BootstrapperBase(bool useApplication) : base(useApplication)
         {
             UseApplication = useApplication;
         }

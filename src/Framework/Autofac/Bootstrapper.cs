@@ -4,11 +4,11 @@ using System.Linq;
 using Autofac;
 using Caliburn.Micro;
 
-namespace Kogler.Framework
+namespace Kogler.Framework.Autofac
 {
-    public class AutofacBootstrapper : Bootstrapper
+    public class Bootstrapper : BootstrapperBase
     {
-        public AutofacBootstrapper(bool useApplication) : base(useApplication)
+        public Bootstrapper(bool useApplication) : base(useApplication)
         {
             Initialize();
         }

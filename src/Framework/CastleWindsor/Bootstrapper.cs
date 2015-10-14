@@ -9,7 +9,7 @@ using Castle.MicroKernel.Resolvers;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 
-namespace Kogler.Framework
+namespace Kogler.Framework.Castle
 {
     public static class WindsorExtensions
     {
@@ -22,9 +22,9 @@ namespace Kogler.Framework
         }
     }
 
-    public class WindsorBootstrapper : Bootstrapper
+    public class Bootstrapper : BootstrapperBase
     {
-        public WindsorBootstrapper(bool useApplication) : base(useApplication)
+        public Bootstrapper(bool useApplication) : base(useApplication)
         {
             Initialize();
         }

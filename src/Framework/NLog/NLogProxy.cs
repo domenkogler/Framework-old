@@ -4,7 +4,7 @@ using Caliburn.Micro;
 using Castle.DynamicProxy;
 using NLog;
 
-namespace Kogler.Framework
+namespace Kogler.Framework.NLog
 {
     public class NLogProxy
     {
@@ -53,7 +53,7 @@ namespace Kogler.Framework
         public static Func<Type, ILog> GetCaliburnMicroLog => type =>
         {
             var options = new ProxyGenerationOptions(hook);
-            options.AddMixinInstance(NLog.LogManager.GetLogger(type.Name));
+            options.AddMixinInstance(global::NLog.LogManager.GetLogger(type.Name));
             var proxy = (ILog) generator.CreateClassProxy(proxyType, interfacesToProxy, options, interceptor);
             return proxy;
         };

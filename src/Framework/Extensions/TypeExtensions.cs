@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Kogler.Framework
 {
@@ -31,6 +33,40 @@ namespace Kogler.Framework
                 toCheck = toCheck.BaseType;
             }
             return null;
+        }
+
+        /// <summary>
+		///   Gets the attribute.
+		/// </summary>
+		/// <param name = "member">The member.</param>
+		/// <returns>The member attribute.</returns>
+		public static bool HasAttribute<T>(this ICustomAttributeProvider member) where T : class
+        {
+            return GetAttributes<T>(member).FirstOrDefault() != null;
+        }
+
+        /// <summary>
+		///   Gets the attribute.
+		/// </summary>
+		/// <param name = "member">The member.</param>
+		/// <returns>The member attribute.</returns>
+		public static T GetAttribute<T>(this ICustomAttributeProvider member) where T : class
+        {
+            return GetAttributes<T>(member).FirstOrDefault();
+        }
+
+        /// <summary>
+        ///   Gets the attributes. Does not consider inherited attributes!
+        /// </summary>
+        /// <param name = "member">The member.</param>
+        /// <returns>The member attributes.</returns>
+        public static T[] GetAttributes<T>(this ICustomAttributeProvider member) where T : class
+        {
+            if (typeof(T) != typeof(object))
+            {
+                return (T[])member.GetCustomAttributes(typeof(T), false);
+            }
+            return (T[])member.GetCustomAttributes(false);
         }
     }
 }

@@ -4,14 +4,15 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Shouldly;
 using Xunit;
+using Kogler.Framework.Mef;
 
 namespace Kogler.Framework.Test
 {
     public partial class BootstrapperTests
     {
-        public class MefTestBootstrapper : MefBootstrapper
+        public class MefTestBootstrapper : Bootstrapper
         {
-            public MefTestBootstrapper() : base(false, new Mef()) { }
+            public MefTestBootstrapper() : base(false, new Mef.Mef()) { }
         }
 
         public class MefBootstrapperTest

@@ -16,34 +16,14 @@ namespace Kogler.Framework
     {
         public abstract class Dockable : ShellConductorBase<TViewModel>, IDockableShell
         {
-            private object top;
-            public object TopDock
-            {
-                get { return top; }
-                set { top = value; NotifyOfPropertyChange(); }
-            }
+            public object TopDock { get; internal set; }
 
-            private object bottom;
-            public object BottomDock
-            {
-                get { return bottom; }
-                set { bottom = value; NotifyOfPropertyChange(); }
-            }
+            public object BottomDock { get; internal set; }
 
-            private object left;
-            public object LeftDock
-            {
-                get { return left; }
-                set { left = value; NotifyOfPropertyChange(); }
-            }
+            public object LeftDock { get; internal set; }
 
-            private object right;
-            public object RightDock
-            {
-                get { return right; }
-                set { right = value; NotifyOfPropertyChange(); }
-            }
-        
+            public object RightDock { get; internal set; }
+
             public void SetDock(object viewModel, Dock dock, IDictionary<string, string> state = null)
             {
                 if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
@@ -53,6 +33,7 @@ namespace Kogler.Framework
                 (viewModel as IActivate)?.Activate();
                 (viewModel as IHaveState)?.SetState(state);
                 prop.SetValue(this, viewModel, null);
+                NotifyOfPropertyChange(prop.Name);
             }
         }
     }

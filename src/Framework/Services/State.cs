@@ -16,6 +16,14 @@ namespace Kogler.Framework
 
     public class State
     {
+        public const string AllStates = "__All";
+        public const string EmptyState = "__Empty";
+        public const string TypeState = "__Type";
+        public const string PathState = "path";
+        public const string UriState = "uri";
+        public const string NewInstanceState = "__NewInstance";
+        public const char StateSplit = '=';
+
         public static string Type(object obj)
         {
             return Type(obj.GetType());
@@ -28,28 +36,41 @@ namespace Kogler.Framework
 
         public static string Type<T>()
         {
-            return Type(typeof (T));
+            return Type(typeof(T));
         }
 
-        public const string AllStates = "__All";
-        public const string EmptyState = "__Empty";
-        public const string TypeState = "__Type";
-        public const char StateSplit = ':';
+        public static Dictionary<string, string> FromUri(string uri, params KeyValuePair<string, string>[] states)
+        {
+            Dictionary<string, string> dic;
+            var delimiterIndex = uri.IndexOf('?');
+            if (delimiterIndex > 0)
+            {
+                dic = uri
+                    .Substring(delimiterIndex + 1)
+                    .Split('&')
+                    .Select(s => new { s, index = s.IndexOf(StateSplit) })
+                    .ToDictionary(s => s.index < 0 ? s.s : s.s.Substring(0, s.index),
+                        s => s.index < 0 ? null : s.s.Substring(s.index + 1));
+                dic.Add(PathState, uri.Substring(0, delimiterIndex));
+            }
+            else dic = new Dictionary<string, string> { { PathState, uri.Substring(0, delimiterIndex) } };
+            return dic;
+        }
     }
 
     public static class StateExtensions
     {
-        public static KeyValuePair<string, string> ToPair(object obj)
+        public static KeyValuePair<string, string> ToPair<T>(T obj) where T : class
         {
             return new KeyValuePair<string, string>(State.TypeState, State.Type(obj));
         }
 
-        public static Dictionary<string, string> ToState(object obj)
+        public static Dictionary<string, string> ToState<T>(T obj, params KeyValuePair<string, string>[] states) where T : class
         {
             return new Dictionary<string, string> {ToPair(obj)};
         }
 
-        public static void SetState(this IHaveState viewModel, object type, IDictionary<string, string> state = null)
+        public static void SetState<T>(this IHaveState viewModel, T type, IDictionary<string, string> state = null) where T : class
         {
             if (state == null) state = ToState(type);
             else state.Add(ToPair(type));
@@ -64,14 +85,14 @@ namespace Kogler.Framework
             return new Dictionary<string, string> {dic};
         }
 
-        public static KeyValuePair<string, string> ToPair(this string state)
+        public static KeyValuePair<string, string> ToPair(this string state, string key = null)
         {
-            return new KeyValuePair<string, string> (state, state);
+            return new KeyValuePair<string, string> (key ?? state, state);
         }
 
-        public static Dictionary<string, string> ToState(this string state)
+        public static Dictionary<string, string> ToState(this string state, string key = null)
         {
-            return new Dictionary<string, string> { ToPair(state) };
+            return new Dictionary<string, string> { ToPair(state, key) };
         }
     }
 }

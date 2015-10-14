@@ -26,7 +26,7 @@ namespace Kogler.Framework.Test
         [Fact]
         public void ViewLocatorTest()
         {
-            var func = Bootstrapper.LocateTypeForModelType;
+            var func = BootstrapperBase.LocateTypeForModelType;
 
             var view1 = func(typeof (ViewModel1), null, null);
             var view11 = func(typeof(ViewModel11), null, null);
