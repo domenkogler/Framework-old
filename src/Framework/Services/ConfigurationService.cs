@@ -8,8 +8,8 @@ namespace Kogler.Framework
 {
     public interface IConfigurationService
     {
-        string Get(string key);
-        string GetAdd(params string[] keys);
+        string GetSection(string key);
+        string JoinSection(params string[] keys);
         IEnumerable<string> GetValues(string key);
         IConfigurationRoot Config { get; }
     }
@@ -22,14 +22,14 @@ namespace Kogler.Framework
             Config = new ConfigurationBuilder(basePath, paths.Select(path => new JsonConfigurationSource(path)).ToArray()).Build();
         }
 
-        public string Get(string key)
+        public string GetSection(string key)
         {
             return Config.GetSection(key).Value;
         }
 
-        public string GetAdd(params string[] keys)
+        public string JoinSection(params string[] keys)
         {
-            return string.Join("", keys.Select(Get));
+            return string.Join("", keys.Select(GetSection));
         }
 
         public IEnumerable<string> GetValues(string key)

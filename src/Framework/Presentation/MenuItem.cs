@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -74,24 +73,24 @@ namespace Kogler.Framework
             set { Set(ref staysOpenOnClick, value); }
         }
 
-        private string imageUri;
-        public string ImageUri
+        private string imagePath;
+        public string ImagePath
         {
-            get { return imageUri; }
-            set { Set(ref imageUri, value, nameof(ImageUri), nameof(Image)); }
+            get { return imagePath; }
+            set { Set(ref imagePath, value, nameof(ImagePath), nameof(Image)); image = null; }
         }
 
-        //private Image image;
+        private Image image;
         public Image Image
         {
             get
             {
-                if (string.IsNullOrEmpty(ImageUri)) return null;
-                return new Image()
+                if (string.IsNullOrEmpty(ImagePath)) return null;
+                return image ?? (image = new Image
                 {
-                    Source = new BitmapImage(new Uri(ImageUri, UriKind.RelativeOrAbsolute)),
+                    Source = new BitmapImage(new Uri(ImagePath, UriKind.RelativeOrAbsolute)),
                     Stretch = Stretch.None
-                };
+                });
             }
         }
 

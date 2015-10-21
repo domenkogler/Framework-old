@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ApplicationInfo.cs" />
+    <Compile Include="Application\Languages.cs" />
     <Compile Include="Autofac\IHaveLifetimeScope.cs" />
     <Compile Include="Presentation\DesignTimeAttribute.cs" />
     <Compile Include="Services\State.cs" />

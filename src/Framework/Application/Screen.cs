@@ -23,7 +23,7 @@ namespace Kogler.Framework
                 if (Equals(field, value)) return false;
             }
             field = value;
-            propertyNames.Apply(NotifyOfPropertyChange);
+            NotifyOfPropertyChange(propertyNames);
             return true;
         }
 
@@ -71,6 +71,11 @@ namespace Kogler.Framework
         protected bool Set<T>(ref T field, T value, params string[] propertyNames)
         {
             return Set(ref field, value, false, propertyNames);
+        }
+
+        protected void NotifyOfPropertyChange(params string[] propertyNames)
+        {
+            propertyNames.Apply(NotifyOfPropertyChange);
         }
     }
 }
