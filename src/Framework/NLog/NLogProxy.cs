@@ -48,13 +48,31 @@ namespace Kogler.Framework.NLog
             {
                 return methodInfo.DeclaringType == typeof (ILog);
             }
+
+            public override bool Equals(object obj)
+            {
+                return GetType() == obj.GetType();
+            }
+
+            public override int GetHashCode()
+            {
+                return GetType().GetHashCode();
+            }
         }
 
-        public static Func<Type, ILog> GetCaliburnMicroLog => type =>
+        public static Func<Type, Logger> GetLogger => type => global::NLog.LogManager.GetLogger(type.Name);
+
+        public static Func<Type, ILog> GetCaliburnMicroILogFromType => type => GetCaliburnMicroILogFromLogger(GetLogger(type));
+
+        public static Func<Logger, ILog> GetCaliburnMicroILogFromLogger => logger =>
         {
             var options = new ProxyGenerationOptions(hook);
-            options.AddMixinInstance(global::NLog.LogManager.GetLogger(type.Name));
-            var proxy = (ILog) generator.CreateClassProxy(proxyType, interfacesToProxy, options, interceptor);
+            options.AddMixinInstance(logger);
+            var proxy = (ILog)generator.CreateClassProxy(proxyType, interfacesToProxy, options, interceptor);
+            var initMethod = typeof(Logger).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic);
+            var configMethod = typeof(LogFactory).GetMethod("GetConfigurationForLogger", BindingFlags.Instance | BindingFlags.NonPublic);
+            var config = configMethod.Invoke(logger.Factory, new object[] {logger.Name, logger.Factory.Configuration});
+            initMethod.Invoke(proxy, new object[] {logger.Name, config, logger.Factory});
             return proxy;
         };
     }

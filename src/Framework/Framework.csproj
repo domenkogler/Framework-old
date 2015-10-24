@@ -99,6 +99,7 @@
     <Compile Include="Application\ApplicationInfo.cs" />
     <Compile Include="Application\Languages.cs" />
     <Compile Include="Autofac\IHaveLifetimeScope.cs" />
+    <Compile Include="Autofac\Log.cs" />
     <Compile Include="Presentation\DesignTimeAttribute.cs" />
     <Compile Include="Services\State.cs" />
     <Compile Include="Services\NavigationService.cs" />

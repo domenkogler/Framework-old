@@ -54,6 +54,10 @@
       <HintPath>..\..\NuGet.packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\NuGet.packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Shouldly, Version=2.6.0.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
       <HintPath>..\..\NuGet.packages\Shouldly.2.6.0\lib\net40\Shouldly.dll</HintPath>
       <Private>True</Private>
@@ -92,6 +96,7 @@
     <Compile Include="BootstrapperTests\BootstrapperTests.cs" />
     <Compile Include="BootstrapperTests\ViewLocatorTest.cs" />
     <Compile Include="BootstrapperTests\MefBootstraperTests.cs" />
+    <Compile Include="NLogTests.cs" />
     <Compile Include="ThreadHelper.cs" />
     <Compile Include="MenuItemCollectionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
