@@ -14,8 +14,8 @@ namespace Kogler.Framework
 
         public NavigationAttribute(IDictionary<string, object> metadata) : base(metadata)
         {
-            Path = (string)metadata["Path"];
-            DisplayName = (string)metadata["DisplayName"];
+            Path = FromMetadata<string>("Path");
+            DisplayName = FromMetadata<string>("DisplayName");
         }
 
         public NavigationAttribute(Type viewType, string path) : base (viewType)

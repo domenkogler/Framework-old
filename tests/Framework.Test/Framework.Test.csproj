@@ -96,6 +96,7 @@
     <Compile Include="BootstrapperTests\BootstrapperTests.cs" />
     <Compile Include="BootstrapperTests\ViewLocatorTest.cs" />
     <Compile Include="BootstrapperTests\MefBootstraperTests.cs" />
+    <Compile Include="ConfigurationServiceTests.cs" />
     <Compile Include="NLogTests.cs" />
     <Compile Include="ThreadHelper.cs" />
     <Compile Include="MenuItemCollectionsTests.cs" />
@@ -104,6 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="config2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config1.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -125,6 +132,11 @@
     <Error Condition="!Exists('..\..\NuGet.packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\NuGet.packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props'))" />
     <Error Condition="!Exists('..\..\NuGet.packages\xunit.runner.visualstudio.2.0.1\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\NuGet.packages\xunit.runner.visualstudio.2.0.1\build\net20\xunit.runner.visualstudio.props'))" />
   </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties config2_1json__JSONSchema="http://json.schemastore.org/config" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

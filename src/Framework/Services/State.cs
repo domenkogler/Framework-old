@@ -53,7 +53,7 @@ namespace Kogler.Framework
                         s => s.index < 0 ? null : s.s.Substring(s.index + 1));
                 dic.Add(PathState, uri.Substring(0, delimiterIndex));
             }
-            else dic = new Dictionary<string, string> { { PathState, uri.Substring(0, delimiterIndex) } };
+            else dic = new Dictionary<string, string> { { PathState, uri } };
             return dic;
         }
     }

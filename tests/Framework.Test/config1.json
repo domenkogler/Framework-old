@@ -1,0 +1,10 @@
+﻿{
+  "Modules": [
+    "Infrastructure.Applications",
+    "Infrastructure.Presentation"
+  ],
+  "Url": {
+    "api": "https://localhost:44332/",
+    "identity" : "https://localhost:44333/"
+  }
+}

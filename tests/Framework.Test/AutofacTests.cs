@@ -34,7 +34,7 @@ namespace Kogler.Framework.Test
         }
 
         [Fact]
-        public void TestScopeInjection()
+        public void ScopeInjectionTest()
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<A>().InstancePerLifetimeScope();
@@ -53,7 +53,7 @@ namespace Kogler.Framework.Test
         }
 
         [Fact]
-        public void TestFactoryScopeInjection()
+        public void FactoryScopeInjectionTest()
         {
             var builder = new ContainerBuilder();
             builder.Register(c => new A(c.Resolve<B>(),c)).InstancePerLifetimeScope();

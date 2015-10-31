@@ -1,0 +1,12 @@
+﻿{
+  "Modules": [    
+    "Domain.Client",
+    "User",
+    "Admin"
+  ],
+  "Url": {    
+    "api_breeze": "/breeze/",
+    "identity_server": "/core",
+    "identity_admin": "/admin"
+  }
+}

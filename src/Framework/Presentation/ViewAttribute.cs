@@ -10,15 +10,23 @@ namespace Kogler.Framework
 
         public Type ViewType { get; private set; }
 
+        protected IDictionary<string, object> Metadata { get; }
+
         public ViewAttribute(IDictionary<string, object> metadata)
         {
-            ViewType = (Type)metadata["ViewType"];
-            Context = metadata["Context"];
+            Metadata = metadata;
+            ViewType = FromMetadata<Type>("ViewType");
+            Context = FromMetadata<object>("Context");
         }
 
         public ViewAttribute(Type viewType)
         {
             ViewType = viewType;
+        }
+
+        protected TType FromMetadata<TType>(string key)
+        {
+            return Metadata.ContainsKey(key) ? (TType) Metadata[key] : default(TType);
         }
     }
 }
