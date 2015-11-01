@@ -19,7 +19,12 @@ namespace Kogler.Framework
     {
         protected ConfigurationServiceBase(string basePath, params string[] paths)
         {
-            Config = new ConfigurationBuilder(basePath, paths.Select(path => new JsonConfigurationSource(path)).ToArray()).Build();
+            var cb = new ConfigurationBuilder();
+            foreach (var provider in paths.Select(p => new JsonConfigurationProvider(basePath + p)))
+            {
+                cb.Add(provider);
+            }
+            Config = cb.Build();
         }
 
         public string GetSection(string key)
