@@ -110,6 +110,8 @@
     <Compile Include="NLog\NLogProxy.cs" />
     <Compile Include="Presentation\ViewAttribute.cs" />
     <Compile Include="Services\ShellConductor.cs" />
+    <Compile Include="Types\DateSpan.cs" />
+    <Compile Include="Types\DateSpanExtensions.cs" />
     <None Include="Obsolete\AutofacViewModel.cs" />
     <Compile Include="Mef\Mef.cs" />
     <Compile Include="Application\Dispatcher.cs" />
@@ -123,7 +125,7 @@
     <Compile Include="Collections\AlphanumComparator.cs" />
     <None Include="Collections\BulkObservableCollection.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
-    <Compile Include="Collections\DateDifference.cs" />
+    <Compile Include="Types\DateDifference.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Collections\LimitedQueue.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />

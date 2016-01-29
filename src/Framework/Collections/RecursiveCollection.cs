@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using Caliburn.Micro;
 
-namespace Kogler.Framework.Collections
+namespace Kogler.Framework
 {
     public class RecursiveCollectionBase<TEntity> : BindableCollection<TEntity>, IRecursiveCollection where TEntity : class//, IRecursive
     {

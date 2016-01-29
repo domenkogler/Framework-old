@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kogler.Framework.Collections
+namespace Kogler.Framework
 {
     public class AlphanumComparator : IComparer<string>, IComparer
     {

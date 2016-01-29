@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kogler.Framework.Collections
+namespace Kogler.Framework
 {
     /*
     * The Alphanum Algorithm is an improved sorting algorithm for strings

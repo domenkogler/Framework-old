@@ -1,6 +1,6 @@
 using System;
 
-namespace Kogler.Framework.Collections
+namespace Kogler.Framework
 {
     public static class DateTimeExtensions
     {

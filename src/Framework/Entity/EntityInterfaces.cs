@@ -19,6 +19,7 @@ namespace Kogler.Framework
     {
         bool Deleted { get; set; }
         string UserName { get; set; }
+        DateTime CreatedDate { get; set; }
         DateTime? ModifiedDate { get; set; }
         byte[] Version { get; set; }
     }
