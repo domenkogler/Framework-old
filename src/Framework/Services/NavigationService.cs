@@ -13,24 +13,20 @@ namespace Kogler.Framework
     {
         public class PathResolve
         {
-            public PathResolve(object viewModel, Dictionary<string, string> state = null)
+            public PathResolve(object viewModel, IDictionary<string, string> state = null)
             {
                 ViewModel = viewModel;
                 State = state;
             }
 
             public object ViewModel { get; }
-            public Dictionary<string, string> State { get; }
+            public IDictionary<string, string> State { get; }
         }
 
         public bool Navigate(string path, IDictionary<string, string> state = null)
         {
-            var resolved = ResolvePath(path);
-            if (resolved.State != null && state != null)
-            {
-                resolved.State.Add(state);
-                state = resolved.State;
-            }
+            state = path.ToState(State.PathState).Merge(state);
+            var resolved = ResolvePath(state);
             return Navigate(resolved.ViewModel, state);
         }
 
@@ -39,6 +35,6 @@ namespace Kogler.Framework
         /// <summary>
         /// Resolves navigation path to Tuple with viewModel and state dictionary
         /// </summary>
-        public static Func<string, PathResolve> ResolvePath { get; set; } = path => { throw new NotImplementedException(); };
+        public static Func<IDictionary<string, string>, PathResolve> ResolvePath { get; set; } = path => { throw new NotImplementedException(); };
     }
 }
