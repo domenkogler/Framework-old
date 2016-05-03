@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Shouldly;
 using Xunit;
 
@@ -8,7 +9,7 @@ namespace Kogler.Framework.Test
     {
         private class ConfigurationService : ConfigurationServiceBase
         {
-            public ConfigurationService() : base(new Uri(typeof(ConfigurationService).Assembly.CodeBase).LocalPath, "config1.json", "config2.json") { }
+            public ConfigurationService() : base(new FileInfo(new Uri(typeof(ConfigurationService).Assembly.CodeBase).LocalPath).DirectoryName, "config1.json", "config2.json") { }
         }
 
         [Fact]

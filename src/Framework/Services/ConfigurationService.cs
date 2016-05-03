@@ -20,7 +20,7 @@ namespace Kogler.Framework
         protected ConfigurationServiceBase(string basePath, params string[] paths)
         {
             var cb = new ConfigurationBuilder();
-            foreach (var provider in paths.Select(p => new JsonConfigurationProvider(basePath + p)))
+            foreach (var provider in paths.Select(p => new JsonConfigurationProvider(basePath + @"\"+ p)))
             {
                 cb.Add(provider);
             }
